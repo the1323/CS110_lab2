@@ -1,38 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Tic Tac Toe Game</title>
-    
+
     <link rel="stylesheet" href="style.css" />
     <script src="main.js"></script>
   </head>
   <body>
-
     <h1>Tic Tac Toe</h1>
     <h2>Its your turn, <span class="display_player"></span>.</h2>
 
     <div class="game_board">
-      <div class='row'>
-        <div class="one"><span class="xo"></span></div>
-        <div class="two"><span class="xo"></span></div>
-        <div class="three"><span class="xo"></span></div>
+      <div class="row">
+        <div class="one" id="cell1"><span class="xo"></span></div>
+        <div class="two" id="cell2"><span class="xo"></span></div>
+        <div class="three" id="cell3"><span class="xo"></span></div>
       </div>
-      <div class='row'>
-        <div class="four"><span class="xo"></span></div>
-        <div class="five"><span class="xo"></span></div>
-        <div class="six"><span class="xo"></span></div>
+      <div class="row">
+        <div class="four" id="cell4"><span class="xo"></span></div>
+        <div class="five" id="cell5"><span class="xo"></span></div>
+        <div class="six" id="cell6"><span class="xo"></span></div>
       </div>
-      <div class='row'>
-        <div class="seven"><span class="xo"></span></div>
-        <div class="eight"><span class="xo"></span></div>
-        <div class="nine"><span class="xo"></span></div>
+      <div class="row">
+        <div class="seven" id="cell7"><span class="xo"></span></div>
+        <div class="eight" id="cell8"><span class="xo"></span></div>
+        <div class="nine" id="cell9"><span class="xo"></span></div>
       </div>
     </div>
 
-    <button class="new_game">New Game</button>
-    <button class="reset">Reset</button>
+    <button class="new_game" id="new_game">New Game</button>
+    <button class="reset" id="reset">Reset</button>
   </body>
-
-
 </html>
