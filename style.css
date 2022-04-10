@@ -9,6 +9,11 @@ h1 {
   text-align: center;
   font-size: 4em;
 }
+h3 {
+  margin: 16px auto;
+  text-align: center;
+  font-size: 30px;
+}
 
 .whose_turn {
   margin: 10px auto;

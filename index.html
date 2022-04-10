@@ -9,27 +9,31 @@
   </head>
   <body>
     <h1>Tic Tac Toe</h1>
+
     <h2>Its your turn, <span class="display_player"></span>.</h2>
 
     <div class="game_board">
       <div class="row">
-        <div class="one" id="cell1"><span class="xo"></span></div>
-        <div class="two" id="cell2"><span class="xo"></span></div>
-        <div class="three" id="cell3"><span class="xo"></span></div>
+        <div class="one" id="cell1"><span class="xo" id="xo1"></span></div>
+        <div class="two" id="cell4"><span class="xo" id="xo4"></span></div>
+        <div class="three" id="cell7"><span class="xo" id="xo7"></span></div>
       </div>
       <div class="row">
-        <div class="four" id="cell4"><span class="xo"></span></div>
-        <div class="five" id="cell5"><span class="xo"></span></div>
-        <div class="six" id="cell6"><span class="xo"></span></div>
+        <div class="four" id="cell2"><span class="xo" id="xo2"></span></div>
+        <div class="five" id="cell5"><span class="xo" id="xo5"></span></div>
+        <div class="six" id="cell8"><span class="xo" id="xo8"></span></div>
       </div>
       <div class="row">
-        <div class="seven" id="cell7"><span class="xo"></span></div>
-        <div class="eight" id="cell8"><span class="xo"></span></div>
-        <div class="nine" id="cell9"><span class="xo"></span></div>
+        <div class="seven" id="cell3"><span class="xo" id="xo3"></span></div>
+        <div class="eight" id="cell6"><span class="xo" id="xo6"></span></div>
+        <div class="nine" id="cell9"><span class="xo" id="xo9"></span></div>
       </div>
     </div>
 
     <button class="new_game" id="new_game">New Game</button>
     <button class="reset" id="reset">Reset</button>
+    <h3 id="message">Next: player X's turn</h3>
+    <h3 id="xscore">X Score: 0</h3>
+    <h3 id="oscore">O Score: 0</h3>
   </body>
 </html>
