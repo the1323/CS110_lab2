@@ -39,25 +39,36 @@ window.addEventListener("load", (event) => {
   document
     .getElementById("reset")
     .addEventListener("click", () => play("reset"));
+  document
+    .getElementById("toggle")
+    .addEventListener("click", () => play("toggle"));
 });
 var turn = 0; //0==x 1==0
 var isOver = false;
 var xscore = 0,
   oscore = 0;
+var isBot = false;
+var botDone = false;
+var timesUp = false;
+var timer = 0;
+let myVar = 0;
+let start = 0;
 var board = (board = [
   [-1, -1, -1],
   [-1, -1, -1],
   [-1, -1, -1],
 ]);
 function resetBoard() {
+  isBot = false;
   turn = 0;
-
+  botTurn = -1;
   isOver = false;
   board = [
     [-1, -1, -1],
     [-1, -1, -1],
     [-1, -1, -1],
   ];
+  document.getElementById("toggle").innerHTML = "Playing with: Human";
   for (let i = 1; i < 10; i++) {
     document.getElementById("xo" + i).innerHTML = "";
   }
@@ -87,12 +98,32 @@ function validateInput(input) {
       return 10;
     case "new_game":
       return 11;
+    case "toggle":
+      return 12;
     default:
       console.log("input error");
       return -1;
   }
 }
 function updateBoard(choice) {
+  if (choice == 13) {
+    document.getElementById("message").innerHTML = turn
+      ? "Next: player X's turn"
+      : "Next: player O's turn";
+
+    turn = !turn;
+    return;
+  }
+  if (choice == 12) {
+    isBot = !isBot;
+    console.log("bot: " + isBot);
+    botTurn = turn;
+    document.getElementById("toggle").innerHTML = isBot
+      ? "Playing with: AI"
+      : "Playing with: Human";
+    return;
+  }
+
   if (choice == 11) {
     resetBoard();
     return;
@@ -114,29 +145,51 @@ function updateBoard(choice) {
 
   if (board[row][col] == -1 && !isOver) {
     // put rock update html if empty
+    timer = 5000;
+    start = Date.now();
+    clearInterval(myVar);
+    myVar = setInterval(myTimer, 90);
     document.getElementById("xo" + choice).innerHTML = turn ? "O" : "X";
     board[row][col] = turn;
   }
-  if (isFull()) {
-    document.getElementById("message").innerHTML = "Game Over: Tie !!! ";
-  } else {
-    if (isWinner(row, col)) {
-      document.getElementById("message").innerHTML = turn
-        ? "Game Over: player O Win !"
-        : "Game Over: player X Win !";
 
-      if (turn == 0) {
-        xscore++;
-        document.getElementById("xscore").innerHTML = "X Score: " + xscore;
-      } else {
-        oscore++;
-        document.getElementById("oscore").innerHTML = "O Score: " + oscore;
-      }
+  if (isWinner(row, col)) {
+    clearInterval(myVar);
+    document.getElementById("message").innerHTML = turn
+      ? "Game Over: player O Win !"
+      : "Game Over: player X Win !";
+
+    if (turn == 0) {
+      xscore++;
+      document.getElementById("xscore").innerHTML = "X Score: " + xscore;
     } else {
-      document.getElementById("message").innerHTML = turn
-        ? "Next: player X's turn"
-        : "Next: player O's turn";
-      turn = !turn;
+      oscore++;
+      document.getElementById("oscore").innerHTML = "O Score: " + oscore;
+    }
+  } else if (isFull()) {
+    document.getElementById("message").innerHTML = "Game Over: Tie !!! ";
+    clearInterval(myVar);
+  } else {
+    document.getElementById("message").innerHTML = turn
+      ? "Next: player X's turn"
+      : "Next: player O's turn";
+
+    turn = !turn;
+  }
+}
+
+function botPlay() {
+  botDone = true;
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 3; col++) {
+      if (board[row][col] == -1) {
+        //empty;
+
+        choice = row * 3 + (col + 1);
+        console.log("ccccccccccccccc " + choice);
+        updateBoard(choice);
+        return;
+      }
     }
   }
 }
@@ -153,14 +206,6 @@ function isFull() {
   return true;
 }
 function isWinner(row, col) {
-  let aa = "";
-  for (let row = 0; row < 3; row++) {
-    for (let col = 0; col < 3; col++) {
-      // not full
-      aa += board[row][col];
-    }
-  }
-  console.log("b: " + aa);
   let counter = 0;
   for (let i = 0; i < 3; i++) {
     if (board[row][i] == turn) {
@@ -200,4 +245,25 @@ function play(input) {
   console.log("input: " + input);
   var choice = validateInput(input);
   updateBoard(choice);
+  if (isBot && turn == botTurn) {
+    console.log("bot play: " + isBot);
+    botPlay();
+    return;
+  }
+}
+
+function myTimer() {
+  document.getElementById("demo").innerHTML =
+    "Time Left: " +
+    Math.floor((timer - Math.floor(Date.now() - start)) / 1000) +
+    " : " +
+    ((timer - Math.floor(Date.now() - start)) % 100);
+  if (timer - Math.floor(Date.now() - start) <= 0) {
+    updateBoard(13);
+    start = Date.now();
+  }
+}
+function myFunction() {
+  alert("Hello");
+  timesUp = true;
 }
